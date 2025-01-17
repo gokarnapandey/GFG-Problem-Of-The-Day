@@ -1,0 +1,42 @@
+class Solution {
+    public static int[] productExceptSelf(int arr[]) {
+       
+       int n = arr.length;  
+       int arr1[] = new int[n];  // Result array to store the final product values
+       
+       int posOFZero = -1;  // Stores the position of the first zero (if any)
+       int cntOfZero = 0;   // Counter for the number of zeroes in the array
+       
+       int product = 1;  // Variable to store the product of all non-zero elements
+       
+       // First pass: Calculate product of all non-zero elements and count zeros
+       for (int i = 0; i < arr.length; i++) {
+          
+           if (arr[i] == 0) {  // If current element is zero
+               posOFZero = i;   // Store its position
+               cntOfZero++;     // Increment zero count
+                
+               if (cntOfZero >= 2) {  
+                   // If more than one zero is found, return arr1 (which is initialized to 0)
+                   return arr1;
+               }
+               continue;  // Skip multiplication for zero
+           }
+           
+           product = product * arr[i];  // Multiply non-zero elements
+       }
+       
+       if (cntOfZero == 1) {  
+           // If there is exactly one zero, only the zero's position should have the product
+           arr1[posOFZero] = product;
+           return arr1;
+       }  
+       
+       // If there are no zeroes, compute result normally
+       for (int i = 0; i < n; i++) {
+           arr1[i] = product / arr[i];  // Each index gets product of all except itself
+       }
+       
+       return arr1;
+    }
+}
